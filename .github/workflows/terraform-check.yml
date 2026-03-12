@@ -1,0 +1,19 @@
+name: Terraform Check
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6
+      - name: Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: modules
+          framework: terraform
+          soft_fail: true
